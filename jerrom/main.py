@@ -1,13 +1,23 @@
-from modules.speech_recognition import handle_command_or_chat
+from modules.speech_recognition import listen_to_user
+from modules.chatbot import chatbot_response
+from modules.text_to_speech import speak_response
 
 def main():
-    print("Hello! I'm Jerrom, your assistant!")
+    print("JARVIS is now active!")
     while True:
-        handle_command_or_chat()  # All-in-one handler
-        print("Say 'exit' to quit.")
-        if input("Type 'exit' to quit or press Enter to continue: ").strip().lower() == "exit":
-            print("Goodbye!")
-            break
+        # Get user input through voice
+        command = listen_to_user()
+        if command:
+            if "exit" in command or "quit" in command:
+                print("Goodbye!")
+                break
+            
+            # Get chatbot response
+            response = chatbot_response(command)
+            print(f"JARVIS: {response}")
+            
+            # Speak the response
+            speak_response(response)
 
 if __name__ == "__main__":
     main()
